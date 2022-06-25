@@ -1,0 +1,77 @@
+﻿@using blogen.Models
+@model List<ApplicationUser>
+<!--HEADER-->
+<header class="bg-warning text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-users"></i>  @ViewBag.Title
+        </h1>
+    </div>
+</header>
+
+<!--SEARCH-->
+<section class="bg-light py-4 mb-4">
+    <div class="container">
+        @using (Html.BeginForm("Index", "Users", FormMethod.Get, new { id = "form1" }))
+        {
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.ActionLink("Add user", "Create", null, new { @class = "btn btn-warning" })
+                </div>
+
+                <div class="col-md-6 ms-auto">
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               placeholder="Search Users..." name="searchFilter"
+                               value="@ViewBag.searchFilter">
+                        <button class="btn btn-warning" type="submit">Search</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+
+<!--Users-->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Latest Users</h4>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-striped ">
+                            <thead class="bg-dark text-light ">
+                                <tr>
+                                    @*<th>Id</th>*@
+                                    <th>User Name</th>
+                                    <th>Email</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        @*<td>@item.Id</td>*@
+                                        <td>@item.UserName</td>
+                                        <td>@item.Email</td>
+                                        <td>
+
+                                            <a href="/Users/Delete/@item.Id" class="btn btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

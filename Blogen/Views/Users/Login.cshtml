@@ -1,0 +1,82 @@
+﻿@using blogen.Models
+@model LoginViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Blogen</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark p-0">
+        <div class="container">
+            <a href="/Home/index" class="navbar-brand">
+                Blogen
+            </a>
+        </div>
+    </nav>
+    <!--HEADER-->
+    <header class="bg-primary text-white py-2">
+        <div class="container">
+            <h1>
+                <i class="fa fa-user"></i> Blogen Login
+            </h1>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Account Login</h4>
+                        </div>
+                        <div class="card-body">
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                <div class="mb-3">
+                                    @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                                    <div >
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                                    <div>
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="d-grid mb-3">
+                                     <input type="submit" value="Log in" class="btn btn-primary" />
+                                </div>
+
+
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+</body>
+</html>

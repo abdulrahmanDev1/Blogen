@@ -1,0 +1,75 @@
+﻿@model blogen.Models.Post
+@using System.Configuration
+
+@{
+    string fullImagePath = Model.ImagePath;
+    string justImageName = Path.GetFileName(fullImagePath);
+    string shortRelativeImagePath =
+        $"/{ConfigurationManager.AppSettings["PostsImagePath"].ToString()}/{justImageName}";
+}
+
+<!--HEADER-->
+<header class="bg-primary text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-pencil"></i>  @ViewBag.Title
+        </h1>
+    </div>
+</header>
+
+<!--Actions-->
+<section class="bg-light py-4 mb-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 d-grid">
+                <a href="/Posts/Index" class="btn btn-light">
+                    <i class="fa fa-arrow-left"></i>
+                    Back to Posts
+                </a>
+            </div>
+            <div class="col-md-3 d-grid">
+                <a href="/Posts/Edit/@Model.ID" class="btn btn-warning">
+                    <i class="fa fa-pencil"></i>
+                    Edit
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-9">
+            <section>
+                <div>
+                    <span class="fw-bold"> @Html.DisplayNameFor(model => model.Category.Title) :</span>
+                    @Html.DisplayFor(model => model.Category.Title)
+                </div>
+                <div>
+                    <span class="fw-bold"> @Html.DisplayNameFor(model => model.Title) :</span>
+                    @Html.DisplayFor(model => model.Title)
+                </div>
+                <div>
+                    <span class="fw-bold">@Html.DisplayNameFor(model => model.UpdateDate) :</span>
+                    @Html.DisplayFor(model => model.UpdateDate)
+                </div>
+                <div>
+                    <span class="fw-bold"> @Html.DisplayNameFor(model => model.Body):</span>
+
+                    @Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(model => model.Body).ToString()))
+                </div>
+            </section>
+        </div>
+        <div class="col-md-3">
+            @{ if (fullImagePath != null) {
+                <img src="@shortRelativeImagePath" class="img-fluid" />
+                }
+            else
+            {
+            <img src="https://t4.ftcdn.net/jpg/04/00/24/31/360_F_400243185_BOxON3h9avMUX10RsDkt3pJ8iQx72kS3.jpg" class="img-fluid" />
+            }
+            }
+        </div>
+    </div>
+</div>
+

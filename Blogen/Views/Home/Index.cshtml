@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<!--HEADER-->
+<header class="bg-primary text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-cog"></i>  Dashboard
+        </h1>
+    </div>
+</header>
+<!--Actions-->
+<section class="bg-light py-4 mb-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-3 d-grid">
+                <a href="#" class="btn btn-primary"
+                   data-bs-toggle="modal"
+                   data-bs-target="#addPostModal">
+                    <i class="fa fa-plus"></i> Add post
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Posts-->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 ">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Latest Posts</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-striped table-responsive " id="tblPosts">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!--Counter cards-->
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-primary text-white text-center mb-3">
+                            <div class="card-body">
+                                <h3>Posts</h3>
+                                <h4 class="display-4">
+                                    <i class="fa fa-pencil"></i> @ViewBag.PostsCounter
+                                </h4>
+                                <a href="/Posts/index"
+                                   class="btn btn-outline-light btn-sm">
+                                    View
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card bg-success text-white text-center mb-3">
+                            <div class="card-body">
+                                <h3>Categories</h3>
+                                <h4 class="display-4">
+                                    <i class="fa fa-folder"></i> @ViewBag.CategoriesCounter
+                                </h4>
+                                <a href="/Categories/index"
+                                   class="btn btn-outline-light btn-sm">
+                                    View
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card bg-warning text-white text-center mb-3">
+                            <div class="card-body">
+                                <h3>Users</h3>
+                                <h4 class="display-4">
+                                    <i class="fa fa-users"></i> @ViewBag.UsersCounter
+                                </h4>
+                                <a href="/Users/Index"
+                                   class="btn btn-outline-light btn-sm">
+                                    View
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</section>
+
+<!--Modals-->
+<!--ADD POST MODAL-->
+<div class="modal fade" id="addPostModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <div class="modal-title">
+                    <h5 class="text-light">
+                        Add Post
+                    </h5>
+                </div>
+                <button class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="myFormPartialPost" enctype = "multipart/form-data" method="post">
+                    <div>
+                        <div>
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" id="title" name="title"/>
+                        </div>
+                        <div>
+                            <label for="category">Category</label>
+                            @Html.DropDownList("CatID", null,  new { @class = "form-select" })
+                        </div>
+                        <div>
+                            <label for="PostImage">Upload Image</label>
+                            <input type="file" class="form-control" id="PostImage" name="PostImage"/>
+                        </div>
+                        <div>
+                            <label>Body</label>
+                            <textarea class="form-control" name="Body" id="Body"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="btnMySubmitPost">
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        CKEDITOR.replace("Body");
+    </script>
+    <script src="~/Scripts/Custom/Posts.js"></script>
+    <script>
+        $.fn.dataTableExt.sErrMode = 'throw'
+        </script>
+}

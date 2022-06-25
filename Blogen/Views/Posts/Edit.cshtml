@@ -1,0 +1,107 @@
+﻿@model blogen.Models.Post
+@using System.Configuration
+@{
+    ViewBag.Title = "Edit";
+    string fullImagePath = Model.ImagePath;
+    string justImageName = Path.GetFileName(fullImagePath);
+    string shortRelativeImagePath =
+        $"/{ConfigurationManager.AppSettings["PostsImagePath"].ToString()}/{justImageName}";
+}
+
+<!--HEADER-->
+<header class="bg-primary text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-pencil"></i>  @ViewBag.Title
+        </h1>
+    </div>
+</header>
+
+@using (Html.BeginForm("Edit", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <!--Actions-->
+    <section class="bg-light py-4 mb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 d-grid">
+                    <a href="/Posts/Index" class="btn btn-light">
+                        <i class="fa fa-arrow-left"></i>
+                        Back to Posts
+                    </a>
+                </div>
+                <div class="col-md-3 d-grid">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Save Changes </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!--Create Post-->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Edit</h4>
+                        </div>
+                        <div class="card-body">
+
+                            @Html.AntiForgeryToken()
+
+                            <div>
+
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.ID)
+                                @Html.HiddenFor(model => model.ImagePath)
+                                <div class="mb-3">
+                                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
+                                    <div>
+                                        @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.LabelFor(model => model.CatID, "Category", htmlAttributes: new { @class = "control-label " })
+                                    <div>
+                                        @Html.DropDownList("CatID", null, htmlAttributes: new { @class = "form-select" })
+                                        @Html.ValidationMessageFor(model => model.CatID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+
+                                <div class="mb-3">
+                                    @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label " })
+                                    <div>
+                                        @Html.TextAreaFor(model => model.Body, new { @class = "form-control", @name = "" })
+                                        @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="w-25 mx-auto">
+                                    <img src="@shortRelativeImagePath" class="img-fluid" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="PostImage" class="form-label">Post Image</label>
+                                    <input class="form-control" type="file" id="PostImage" name="PostImage">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @section scripts {
+        <script>
+            CKEDITOR.replace("Body");
+        </script>
+    }
+
+}
+

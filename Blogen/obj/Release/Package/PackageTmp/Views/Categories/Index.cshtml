@@ -1,0 +1,82 @@
+﻿@using blogen.Models
+@model  List<Category>
+
+<!--HEADER-->
+<header class="bg-success text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-folder"></i>  @ViewBag.Title
+        </h1>
+    </div>
+</header>
+<!--SEARCH-->
+<section class="bg-light py-4 mb-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                @*<a href="/Categories/Create" class="btn btn-success">Create Category</a>*@
+                @Html.ActionLink( "Create Category", "Create",null,new { @class = "btn btn-success" })
+            </div>
+            <div class="col-md-6 ms-auto">
+                @using (Html.BeginForm("Search", "Categories", FormMethod.Get))
+                {
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               placeholder="Search Categories..." name="searchFilter"
+                               value="@ViewBag.searchFilter">
+                        <button class="btn btn-success" type="submit">Search</button>
+                    </div>
+                }
+                </div>
+        </div>
+    </div>
+</section>
+
+
+<!--Categories-->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Latest Categories</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped table-responsive">
+                            <thead class="bg-dark text-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                             @foreach (var item in Model)
+                             {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Title</td>
+                                    <td>@item.UpdateDate</td>
+                                    <td>
+                                        <a href="/Categories/Edit/@item.Id" class="btn btn-warning">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a href="/Categories/Delete/@item.Id" class="btn btn-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                             }
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

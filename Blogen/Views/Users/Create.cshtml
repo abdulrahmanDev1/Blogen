@@ -1,0 +1,74 @@
+﻿
+@model blogen.Models.RegisterViewModel
+
+
+
+<!--HEADER-->
+<header class="bg-warning text-white py-2">
+    <div class="container">
+        <h1>
+            <i class="fa fa-users"></i>  @ViewBag.Title
+        </h1>
+    </div>
+</header>
+
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+{
+    <!--Actions-->
+    <section class="bg-light py-4 mb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 d-grid">
+                    <a href="/Users/Index" class="btn btn-light">
+                        <i class="fa fa-arrow-left"></i>
+                        Back to Users
+                    </a>
+                </div>
+                <div class="col-md-3 d-grid">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> @ViewBag.Title </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Create Post-->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>@ViewBag.Title</h4>
+                        </div>
+                        <div class="card-body">
+
+                            @Html.AntiForgeryToken()
+
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+                            <div>
+                                @Html.LabelFor(m => m.Email, new { @class = " control-label" })
+                                <div>
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div>
+                                @Html.LabelFor(m => m.Password, new { @class = " control-label" })
+                                <div>
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div>
+                                @Html.LabelFor(m => m.ConfirmPassword, new { @class = " control-label" })
+                                <div>
+                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
